@@ -44,6 +44,9 @@ class App extends Component {
       from: accounts[0]
     });
 
+    console.log(tx);
+
+
     this.runExample();
   }
 
