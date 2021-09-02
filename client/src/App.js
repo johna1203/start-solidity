@@ -5,7 +5,7 @@ import getWeb3 from "./getWeb3";
 import "./App.css";
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null, input: '0' };
+  state = { storageValue: 0, web3: null, accounts: null, contract: null, input: '0', owner: '0' };
 
   componentDidMount = async () => {
     try {
@@ -35,7 +35,9 @@ class App extends Component {
   runExample = async () => {
     const { accounts, contract } = this.state;
     const response = await contract.methods.get().call();
-    this.setState({ storageValue: response });
+    const owner = await contract.methods.owner().call();
+    console.log(owner);
+    this.setState({ storageValue: response, owner });
   };
 
   handleSetButton = async () => {
@@ -70,6 +72,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>The stored value is: {this.state.storageValue}</h1>
+        <h3>Owner is {this.state.owner}</h3>
         <input onChange={this.handleInputAmount} value={this.state.input} />
         <button onClick={this.handleSetButton}>Set</button>
         <button onClick={this.handleAddButton}>Add</button>
